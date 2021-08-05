@@ -1,6 +1,6 @@
 input.onButtonPressed(Button.A, function () {
-    if (moving == 1) {
-        radio.sendString("turn")
+    if (moving == true) {
+        radio.sendString("left")
         basic.showLeds(`
             . . # . .
             . # . . .
@@ -18,35 +18,54 @@ input.onButtonPressed(Button.A, function () {
             `)
     }
 })
+input.onButtonPressed(Button.AB, function () {
+    moving = true
+    if (direction == "forward") {
+        radio.sendString("reverse")
+        direction = "backward"
+        basic.showLeds(`
+            . . # . .
+            . . # . .
+            # . # . #
+            . # # # .
+            . . # . .
+            `)
+    } else {
+        radio.sendString("forward")
+        direction = "forward"
+        basic.showLeds(`
+            . . # . .
+            . # # # .
+            # . # . #
+            . . # . .
+            . . # . .
+            `)
+    }
+})
 input.onButtonPressed(Button.B, function () {
-    if (moving == 1) {
-        if (direction == 1) {
-            radio.sendString("reverse")
-            direction = -1
-            basic.showLeds(`
-                . . # . .
-                . . # . .
-                # . # . #
-                . # # # .
-                . . # . .
-                `)
-        } else {
-            radio.sendString("forward")
-            direction = 1
-            basic.showLeds(`
-                . . # . .
-                . # # # .
-                # . # . #
-                . . # . .
-                . . # . .
-                `)
-        }
+    if (moving == true) {
+        radio.sendString("right")
+        basic.showLeds(`
+            . . # . .
+            . . . # .
+            # # # # #
+            . . . # .
+            . . # . .
+            `)
+        basic.pause(1000)
+        basic.showLeds(`
+            . . # . .
+            . # # # .
+            # . # . #
+            . . # . .
+            . . # . .
+            `)
     }
 })
 input.onLogoEvent(TouchButtonEvent.Pressed, function () {
-    direction = 1
-    if (moving == 0) {
-        moving = 1
+    direction = "forward"
+    if (moving == false) {
+        moving = true
         radio.sendString("forward")
         basic.showLeds(`
             . . # . .
@@ -56,11 +75,26 @@ input.onLogoEvent(TouchButtonEvent.Pressed, function () {
             . . # . .
             `)
     } else {
-        moving = 0
+        moving = false
         radio.sendString("stop")
+        basic.showLeds(`
+            . . . . .
+            . # . # .
+            . . . . .
+            # . . . #
+            . # # # .
+            `)
     }
 })
-let direction = 0
-let moving = 0
+let direction = ""
+let moving = false
 radio.setGroup(1)
-moving = 0
+moving = true
+direction = "forward"
+basic.showLeds(`
+    . . . . .
+    . # . # .
+    . . . . .
+    # . . . #
+    . # # # .
+    `)
