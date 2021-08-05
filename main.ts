@@ -1,6 +1,6 @@
 input.onButtonPressed(Button.A, function () {
     if (moving == 1) {
-        radio.sendNumber(2)
+        radio.sendString("turn")
         basic.showLeds(`
             . . # . .
             . # . . .
@@ -21,7 +21,7 @@ input.onButtonPressed(Button.A, function () {
 input.onButtonPressed(Button.B, function () {
     if (moving == 1) {
         if (direction == 1) {
-            radio.sendNumber(-1)
+            radio.sendString("reverse")
             direction = -1
             basic.showLeds(`
                 . . # . .
@@ -31,7 +31,7 @@ input.onButtonPressed(Button.B, function () {
                 . . # . .
                 `)
         } else {
-            radio.sendNumber(1)
+            radio.sendString("forward")
             direction = 1
             basic.showLeds(`
                 . . # . .
@@ -47,7 +47,7 @@ input.onLogoEvent(TouchButtonEvent.Pressed, function () {
     direction = 1
     if (moving == 0) {
         moving = 1
-        radio.sendNumber(1)
+        radio.sendString("forward")
         basic.showLeds(`
             . . # . .
             . # # # .
@@ -57,7 +57,7 @@ input.onLogoEvent(TouchButtonEvent.Pressed, function () {
             `)
     } else {
         moving = 0
-        radio.sendNumber(0)
+        radio.sendString("stop")
     }
 })
 let direction = 0
